@@ -1,0 +1,158 @@
+#nomcliente {
+  width: 25%;
+  box-sizing: border-box;
+}
+ 
+#numsv {
+  width: 5%;
+  box-sizing: border-box;
+}
+
+.observaciones-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .observaciones-container label {
+    margin-right: 10px;
+  }
+  
+  #observaciones {
+    width: 700px;
+    height: 150px;
+  }
+  
+
+  #firmCliente {
+    width: 300px;
+    height: 100px;
+  }
+  
+  #firmProyectista{
+    width: 300px;
+    height: 100px;
+  }
+
+  #body { 
+    background-image: url(/img/Sin\ título.jpg);
+  }
+
+  #saesa-fieldset {
+    height: 20px;
+    width: 50px;
+  }
+
+  .contenedor {
+    display: flex;
+    margin: 0;
+  }
+  
+  .rectangulo1 {
+    display: inline-block;
+    width: 250px;
+    height: 70px;
+    background-color: white;
+    border: 0px solid black;
+    margin-right: 0px;
+    background-image: url("img/saesa.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+
+  
+  .rectangulo2 {
+    display: inline-block;
+    width: 300px;
+    height: 50px;
+    background-color: white;
+    border: 3px solid #4e33fe;
+    margin-right: 20px;
+    background-image: url("img/Sin\ título2.jpg");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  
+  .rectangulo3 {
+    display: inline-block;
+    width: 250px;
+    height: 70px;
+    background-color: white;
+    border: 0px solid black;
+    margin-right: 20px;
+    background-image: url("img/LOGOTIPO-FINAL-INPROEL-removebg-preview.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  
+  .rectangulo4 {
+    display: inline-block;
+    width: 90px;
+    height: 55px;
+    background-color: white;
+    border: 0px solid black;
+    margin-right: 10px;
+  }
+  
+  .rectangulo4 form {
+    padding: 10px;
+  }
+  
+  .rectangulo4 input[type="text"] {
+    width: 100%;
+    height: 20px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+  }
+
+  .tabla {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .tabla th, .tabla td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 2px solid #4e33fe;
+  }
+  
+  .tabla th {
+    background-color: #4e33fe;
+  }
+  
+  .tabla tr:nth-child(even) {
+    background-color: #ffffff;
+  }
+  
+  .tabla input[type="radio"] {
+    margin-right: 5px;
+  }
+
+
+  #visitat {
+    
+    width: 300px;
+    height: 25px;
+  }
+
+  @media print {
+    .rectangulo1, .rectangulo2, .rectangulo3, .tabla {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      background-color: #fff;
+    }
+  }
+  
+  footer {
+    background-color: #ffffff;
+    color: #444;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+

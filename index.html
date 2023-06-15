@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro Visita a terreno</title>
+
+  <link rel="stylesheet" type="text/css" href="/estilo.css">
+  <script src="funcoes.js"></script>
+  <script src="jspdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+  
+
+</head>
+
+<body>
+
+
+  <div id="capture">
+    <div class="contenedor">      
+      <div class="rectangulo1"></div>
+      <div class="rectangulo2"></div>
+      <div class="rectangulo3"></div>       
+    </div>
+
+    <fieldset>
+      <form>
+        <div class="">
+
+          <label for="workflow">Workflow:</label>
+          <input type="text" name="workflow" id="workflow">
+          <label for="nomcliente">Nombre del Cliente:</label>
+          <input type="text" name="nomcliente" id="nomcliente"><br><br>
+        </div>
+        
+
+        <label for="responsable">Responsable:</label>
+        <select id="responsable" name="responsable">
+          <option selected disabled value="">Seleccione</option>
+          <option value="FelipeDiaz">Felipe Diaz .B</option>
+          <option value="Carlos">Carlos Rozas .R</option>
+          <option value="Rodrigo">Rodrigo Perez .A</option>
+          <option value="Sebastian">Sebastian Talma .A</option>
+
+        </select>
+
+        <label for="fechaVisita">Fecha de Visita a Terreno:</label>
+        <input type="date" name="fechaVisita" id="fechaVisita"><br><br>
+
+        <label for="sector">Comuna-Sector:</label>
+        <input type="text" name="sector" id="sector"><br><br>
+      </form>
+
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Visita a Terreno</th>
+            <th>Estado</th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>PERMISOS SERVIDUMBRE (Indicar Cantidad)</td>
+            
+            <td>
+              <form>
+                
+                
+                <div class="izquierda">
+                  
+                </div>
+                
+                
+                <label for="visitaTerrenoSi1">Si:</label>
+                <input type="radio" id="visitaTerreno1" name="visitaTerrenoSi1" value="si" class="izquierda2">
+                
+
+                <label for="visitaTerrenoNo1">No:</label>
+                <input type="radio" name="visitaTerreno1" value="no" id="visitaTerrenoNo1">
+
+                <label for="visitaTerrenoNoAplica1">No Aplica:</label>
+                <input type="radio" name="visitaTerreno1" value="no aplica" id="visitaTerrenoNoAplica1">
+              
+
+              </form>
+            </td>
+          </tr>
+
+          <tr>
+
+            <td>2</td>
+            <td>Vialidad</td>
+            <td>
+              <form>
+                
+                <div class="centralizar">
+                  <label for="visitaTerreno2">Si:</label>
+                  <input type="radio" name="visitaTerreno2" value="si" id="visitaTerreno2">
+
+                  <label for="visitaTerrenoNo2">No:</label>
+                  <input type="radio" name="visitaTerreno2" value="no" id="visitaTerrenono2">
+
+                  <label for="visitaTerrenoNoAplica2">No Aplica:</label>
+                  <input type="radio" name="visitaTerreno2" value="no" id="visitaTerrenono2">
+                </div>  
+
+
+              </form>
+            </td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>ESTACADO (Cuando requiera)</td>
+            <td>
+              <form>
+
+                <div class="centralizar">
+                <label for="visitaTerrenoSi3">Si:</label>
+                <input type="radio" name="visitaTerreno3" value="si" id="visitaTerrenoSi3">
+
+                <label for="visitaTerrenoNo3">No:</label>
+                <input type="radio" name="visitaTerreno3" value="no" id="visitaTerrenoNo3">
+
+                <label for="visitaTerrenoNoAplica3">No Aplica:</label>
+                <input type="radio" name="visitaTerreno3" value="no aplica" id="visitaTerrenoNoAplica3">
+                </div>  
+
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table><br>
+
+      <label for="numsv" id="numsv">Número de Servidumbre: </label>
+      <input type="text" name="numsv" id="numsv"><br><br>
+
+      <form>
+        <div class="observaciones-container">
+          <label for="observaciones">Observaciones</label>
+          <textarea id="observaciones"></textarea>
+        </div><br>
+       
+        
+          <label for="visitat" id="visitat">Visita en terreno realizada por:</label>
+          <input type="text" name="visitat" id="visitat"><br><br>
+          <label for="rut" id="rut">RUT:</label>
+          <input type="text" name="rut" id="rut"><br><br> 
+        
+
+        <!-- HTML para el lienzo de firma del cliente -->
+        <label for="firmaCliente"><b>Firma de contacto en terreno:</b></label>
+        
+        <div>
+          <canvas id="canvasCliente" width="500" height="150" style="border: 1px dashed rgb(4, 0, 0); width: 700px; height: 200px;"></canvas>
+          <button type="button" onclick="borrarFirmaCliente()">Borrar</button><br><br>
+
+        </div>
+
+        <label for="firmaCliente"><b>Firma Inspector de terreno:</b></label>
+        
+        <div>
+          <canvas id="canvasProyectista" width="500" height="150" style="border: 1px dashed rgb(9, 0, 0); width: 700px; height: 200px;"></canvas>
+          <button type="button" onclick="borrarFirmaProyectista()">Borrar</button>
+        </div>
+
+        
+
+      </form>
+
+      <button onclick="imprimir()">Descargar PDF</button>
+          
+
+    </fieldset><br>
+
+
+</body>
+
+</html>
