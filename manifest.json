@@ -1,0 +1,34 @@
+{
+  "name": "Mi Aplicación de Registro de Visita a Terreno",
+  "short_name": "Registro de Visita",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3367D6",
+  "icons": [
+    {
+      "src": "/img/LOGO_PARA_LA_ROJA_63x15_75-removebg-preview-removebg-preview.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/LOGO_PARA_LA_ROJA_63x15_75-removebg-preview-removebg-preview.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "splash_pages": null,
+  "screenshots": [],
+  "scope": "/",
+  "orientation": "portrait",
+  "display_override": null,
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "serviceworker": {
+    "src": "/service-worker.js",
+    "scope": "/",
+    "use_cache_storage": true
+  },
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff"
+}

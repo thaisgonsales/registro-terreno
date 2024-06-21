@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro Visita a Terreno</title>
+  <link rel="stylesheet" type="text/css" href="estilo_valdivia.css?v=1">
+
+  <script src="jspdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+  <script src="funcoes.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <link rel="manifest" href="/manifest.json">
+
+
+
+</head>
+
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="navbar-brand">
+      <img src="/img/LOGO_PARA_LA_ROJA_63x15_75-removebg-preview-removebg-preview.png" alt="Logo La Roja" class="logo-la-roja">
+      <h2 class="cabecera">REGISTRO VISITA DE TERRENO</h2>
+      <img src="/img/Grupos saesa.png" alt="Logo Saesa" class="logo-saesa">
+    </div>
+  </nav>
+
+
+
+  <div class="container">
+    <form id="formulario">
+      <div class="form-group">
+        <label for="workflow">Workflow:</label>
+        <input type="text" name="workflow" id="workflow">
+      </div>
+
+      <div class="form-group">
+        <label for="nomcliente">Nombre del Cliente:</label>
+        <input type="text" name="nomcliente" id="nomcliente">
+      </div>
+
+      <div class="form-group">
+        <label for="responsable">Responsable:</label>
+        <select id="responsable" name="responsable">
+          <option selected disabled value="">Seleccione</option>
+          <option value="Guillermo Rifo">Guillermo Rifo</option>
+          <option value="Guillermo Betancourt">Guillermo Betancourt</option>
+          <option value="Pablo Gonzalez">Pablo Gonzalez</option>
+          <option value="Jonathan Saldivia">Jonathan Saldivia</option>
+          <option value="Roberto Fuentealba">Roberto Fuentealba</option>
+          <option value="Cristian Saavedra">Cristian Saavedra</option>
+          <option value="Javier Rocha">Javier Rocha</option>
+          <option value="Ivan Villagran">Ivan Villagran</option>
+          <option value="Victor Pontigo">Victor Pontigo</option>
+          <option value="Cristian Duarte">Cristian Duarte</option>
+
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="fechaVisita">Fecha de Visita a Terreno:</label>
+        <input type="date" name="fechaVisita" id="fechaVisita">
+      </div>
+
+      <div class="form-group">
+        <label for="sector">Comuna-Sector:</label>
+        <input type="text" name="sector" id="sector">
+      </div>
+
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Visita a Terreno</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>1</b></td>
+            <td>Permisos Servidumbre (Indicar Cantidad)</td>
+            <td>
+              <select id="estado1" name="estado1">
+                <option selected disabled value=""></option>
+                <option value="si">Si</option>
+                <option value="no">No</option>
+                <option value="no aplica">No Aplica</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><b>2</b></td>
+            <td>Vialidad</td>
+            <td>
+              <select id="estado2" name="estado2">
+                <option selected disabled value=""></option>
+                <option value="si">Si</option>
+                <option value="no">No</option>
+                <option value="no aplica">No Aplica</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><b>3</b></td>
+            <td>Estacado (Cuando requiera)</td>
+            <td>
+              <select id="estado3" name="estado3">
+                <option selected disabled value=""></option>
+                <option value="si">Si</option>
+                <option value="no">No</option>
+                <option value="no aplica">No Aplica</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="form-group">
+        <label for="numsv">Número de Servidumbres:</label>
+        <input type="text" name="numsv" id="numsv">
+      </div>
+
+      <div class="form-group">
+        <label for="observaciones">Observaciones</label>
+        <textarea id="observaciones" rows="4"></textarea>
+      </div>
+
+
+      <div style="page-break-before: always;"></div>
+
+      <div class="form-group">
+        <label for="visitat">Visita en terreno realizada por:</label>
+        <input type="text" name="visitat" id="visitat">
+      </div>
+
+      
+
+      <div class="form-group">
+        <label for="rut">RUT:</label>
+        <input type="text" name="rut" id="rut">
+      </div>
+
+      <!-- HTML para el lienzo de firma del cliente -->
+      <div class="signature">
+        <label for="firmaCliente"><b>Firma de contacto en terreno:</b></label>
+        <canvas id="canvasCliente" width="300" height="150" style="border: 1px dashed rgb(4, 0, 0);"></canvas>
+        <button type="button" onclick="borrarFirmaCliente()" style="margin-bottom: 10px;">Borrar</button>
+
+      </div>
+
+      <div class="signature">
+        <label for="firmaProyectista"><b>Firma Inspector de terreno:</b></label>
+        <canvas id="canvasInspectorTerreno" width="300" height="150" style="border: 1px dashed rgb(9, 0, 0);"></canvas>
+        <button type="button" onclick="borrarFirmaProyectista()" style="margin-bottom: 10px;">Borrar</button>
+
+
+    </form>
+    <button type="button" onclick="descargarPDF()">Descargar PDF</button>
+  </div>
+
+  <script>
+    function descargarPDF() {
+      const navbar = document.getElementById('navbar').outerHTML; // Obtener el HTML del navbar
+      const workflow = document.getElementById('workflow').value;
+      const nomcliente = document.getElementById('nomcliente').value;
+      const responsable = document.getElementById('responsable').value;
+      const fechaVisita = document.getElementById('fechaVisita').value;
+      const sector = document.getElementById('sector').value;
+      const estado1 = document.getElementById('estado1').value;
+      const estado2 = document.getElementById('estado2').value;
+      const estado3 = document.getElementById('estado3').value;
+      const numsv = document.getElementById('numsv').value;
+      const observaciones = document.getElementById('observaciones').value;
+      const visitat = document.getElementById('visitat').value;
+      const rut = document.getElementById('rut').value;
+
+      // Capturar las imágenes de las firmas
+      const firmaCliente = document.getElementById('canvasCliente').toDataURL(); // Convertir la firma del cliente a una imagen
+      const firmaInspector = document.getElementById('canvasInspectorTerreno').toDataURL(); // Convertir la firma del inspector a una imagen
+
+      // Configurar opciones para html2pdf
+      const opt = {
+        margin: 1,
+        filename: 'registro_visita_terreno.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      // Construir el contenido del PDF
+      const content = `
+        ${navbar}
+        <div class="container">
+          <div class="form-group"><label for="workflow">Workflow:</label><input type="text" name="workflow" id="workflow" value="${workflow}" readonly></div>
+          <div class="form-group"><label for="nomcliente">Nombre del Cliente:</label><input type="text" name="nomcliente" id="nomcliente" value="${nomcliente}" readonly></div>
+          <div class="form-group"><label for="responsable">Responsable:</label><input type="text" name="responsable" id="responsable" value="${responsable}" readonly></div>
+          <div class="form-group"><label for="fechaVisita">Fecha de Visita a Terreno:</label><input type="text" name="fechaVisita" id="fechaVisita" value="${fechaVisita}" readonly></div>
+          <div class="form-group"><label for="sector">Comuna-Sector:</label><input type="text" name="sector" id="sector" value="${sector}" readonly></div>
+          <div class="form-group">
+            <div class="form-group"><label for="numsv">Número de Servidumbre:</label><input type="text" name="numsv" id="numsv" value="${numsv}" readonly></div>
+            <label for="observaciones">Observaciones:</label>
+            <!-- Aplicar un estilo directamente al textarea para aumentar su tamaño en el PDF -->
+            <textarea name="observaciones" id="observaciones" style="width: 100%; height: 200px;" readonly>${observaciones}</textarea>
+          </div>
+          <!-- Agregar más campos y contenido aquí si es necesario -->
+          <div class="form-group"><label for="visitat">Visita en terreno realizada por:</label><input type="text" name="visitat" id="visitat" value="${visitat}" readonly></div>
+          <div class="form-group" style="page-break-before: always;">
+            <div class="form-group"><label for="rut">RUT:</label><input type="text" name="rut" id="rut" value="${rut}" readonly></div>
+            <div class="form-group"><label for="firmaCliente">Firma de contacto en terreno:</label><br><img src="${firmaCliente}" alt="Firma Cliente" style="border: 1px dashed #000;"></div>
+            <div class="form-group"><label for="firmaInspector">Firma Inspector de terreno:</label><br><img src="${firmaInspector}" alt="Firma Inspector" style="border: 1px dashed #000;"></div>
+          </div>
+        </div>
+      `;
+
+      // Crear el PDF
+      const pdf = html2pdf();
+      pdf.from(content).set(opt).toPdf().get('pdf').then(function(pdf) {
+        // Agregar bordes a los laterales del documento PDF
+        const totalPages = pdf.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+          pdf.setPage(i);
+          pdf.setDrawColor(0);
+          pdf.setLineWidth(0.02);
+          pdf.line(0.5, 0.5, 8 - 0.5, 0.5); // Línea superior
+          pdf.line(0.5, 11 - 0.5, 8 - 0.5, 11 - 0.5); // Línea inferior
+        }
+      }).save();
+    }
+</script>
+<script>
+  function descargarPDF() {
+    const navbar = document.getElementById('navbar').outerHTML; // Obtener el HTML del navbar
+    const workflow = document.getElementById('workflow').value;
+    const nomcliente = document.getElementById('nomcliente').value;
+    const responsable = document.getElementById('responsable').value;
+    const fechaVisita = document.getElementById('fechaVisita').value;
+    const sector = document.getElementById('sector').value;
+    const estado1 = document.getElementById('estado1').value;
+    const estado2 = document.getElementById('estado2').value;
+    const estado3 = document.getElementById('estado3').value;
+    const numsv = document.getElementById('numsv').value;
+    const observaciones = document.getElementById('observaciones').value;
+    const visitat = document.getElementById('visitat').value;
+    const rut = document.getElementById('rut').value;
+
+    // Capturar las imágenes de las firmas
+    const firmaCliente = document.getElementById('canvasCliente').toDataURL(); // Convertir la firma del cliente a una imagen
+    const firmaInspector = document.getElementById('canvasInspectorTerreno').toDataURL(); // Convertir la firma del inspector a una imagen
+
+    // Configurar opciones para html2pdf
+    const opt = {
+      margin: 1,
+      filename: 'registro_visita_terreno.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    // Construir el contenido del PDF
+    const content = `
+      ${navbar}
+      <div class="container">
+        <div class="form-group"><label for="workflow">Workflow:</label><input type="text" name="workflow" id="workflow" value="${workflow}" readonly></div>
+        <div class="form-group"><label for="nomcliente">Nombre del Cliente:</label><input type="text" name="nomcliente" id="nomcliente" value="${nomcliente}" readonly></div>
+        <div class="form-group"><label for="responsable">Responsable:</label><input type="text" name="responsable" id="responsable" value="${responsable}" readonly></div>
+        <div class="form-group"><label for="fechaVisita">Fecha de Visita a Terreno:</label><input type="text" name="fechaVisita" id="fechaVisita" value="${fechaVisita}" readonly></div>
+        <div class="form-group"><label for="sector">Comuna-Sector:</label><input type="text" name="sector" id="sector" value="${sector}" readonly></div>
+        <div class="form-group">
+          <div class="form-group"><label for="numsv">Número de Servidumbre:</label><input type="text" name="numsv" id="numsv" value="${numsv}" readonly></div>
+          <label for="observaciones">Observaciones:</label>
+          <!-- Aplicar un estilo directamente al textarea para aumentar su tamaño en el PDF -->
+          <textarea name="observaciones" id="observaciones" style="width: 100%; height: 200px;" readonly>${observaciones}</textarea>
+        </div>
+        <!-- Agregar más campos y contenido aquí si es necesario -->
+        <div class="form-group" style="page-break-before: always;">
+        <div class="form-group"><label for="visitat">Visita en terreno realizada por:</label><input type="text" name="visitat" id="visitat" value="${visitat}" readonly></div>
+        
+          <div class="form-group"><label for="rut">RUT:</label><input type="text" name="rut" id="rut" value="${rut}" readonly></div>
+          <div class="form-group"><label for="firmaCliente">Firma de contacto en terreno:</label><br><img src="${firmaCliente}" alt="Firma Cliente" style="border: 1px dashed #000;"></div>
+          <div class="form-group"><label for="firmaInspector">Firma Inspector de terreno:</label><br><img src="${firmaInspector}" alt="Firma Inspector" style="border: 1px dashed #000;"></div>
+        </div>
+      </div>
+    `;
+
+    // Crear el PDF
+    const pdf = html2pdf();
+    pdf.from(content).set(opt).toPdf().get('pdf').then(function(pdf) {
+      // Agregar bordes a los laterales del documento PDF
+      const totalPages = pdf.internal.getNumberOfPages();
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setPage(i);
+        pdf.setDrawColor(0);
+        pdf.setLineWidth(0.02);
+        pdf.line(0.5, 0.5, 8 - 0.5, 0.5); // Línea superior
+        pdf.line(0.5, 11 - 0.5, 8 - 0.5, 11 - 0.5); // Línea inferior
+      }
+    }).save();
+  }
+</script>
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+              console.log('Service Worker registrado con éxito:', registration.scope);
+          }, function(err) {
+              console.log('Fallo en el registro del Service Worker:', err);
+          });
+      });
+  }
+</script>
+
+
+
+  
+    </body>
+    </html>
+    
